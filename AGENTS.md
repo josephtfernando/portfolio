@@ -5,7 +5,7 @@ Personal portfolio site with a blog, built with SvelteKit. Deployed to Vercel (G
 - **Package manager:** pnpm (always use `pnpm`, not `npm`/`yarn`, to keep the lockfile consistent)
 - **Language:** TypeScript
 - **Styling:** Tailwind CSS v4 (via `@tailwindcss/vite`)
-- **Adapter:** `@sveltejs/adapter-vercel`, pinned to `runtime: 'nodejs22.x'` in `frontend/vite.config.ts` (the adapter can't infer a runtime from unreleased local Node versions, so it's set explicitly rather than left on auto-detect)
+- **Adapter:** `@sveltejs/adapter-vercel`, pinned to `runtime: 'nodejs22.x'` in `frontend/svelte.config.js` (the adapter can't infer a runtime from unreleased local Node versions, so it's set explicitly rather than left on auto-detect)
 - **Testing:** Vitest (`pnpm run test`)
 - **Dev server:** run `cd frontend && pnpm run dev` (default URL: http://localhost:5173). For a production build check: `pnpm run build && pnpm run preview` from `frontend/`.
 
@@ -17,10 +17,10 @@ Personal portfolio site with a blog, built with SvelteKit. Deployed to Vercel (G
 
 ## SvelteKit conventions
 
-- This SvelteKit version merges adapter/plugin config into `frontend/vite.config.ts` — there is no separate `svelte.config.js`.
+- `frontend/svelte.config.js` holds the SvelteKit config (preprocess + adapter); `frontend/vite.config.ts` holds only the Vite plugins (Tailwind, SvelteKit) and the Vitest config. Adapter config belongs in `svelte.config.js`, not `vite.config.ts`.
 - Prefer `+page.server.ts` load functions for data that doesn't need client-side reactivity (e.g., blog post lists) over client-side `fetch`.
 - Use `$lib` for shared code, not relative `../../` imports.
-- Use `resolve()` from `$app/paths` for internal `href`s (e.g., `resolve('/blog/[slug]', { slug })`), not raw template strings — the ESLint rule `svelte/no-navigation-without-resolve` enforces this and it keeps links type-checked against real routes.
+- Use `resolve()` from `$app/paths` for internal `href`s (e.g., `resolve('/blog/[slug]', { slug })`), not raw template strings — it keeps links type-checked against real routes. Nothing lints this automatically (eslint-plugin-svelte 2.x has no such rule), so it is on you to follow.
 - Keep components small and colocate route-specific logic in `+page.server.ts`/`+page.ts` rather than pushing everything into `+page.svelte`.
 - Favor SvelteKit's SSR-by-default behavior; don't reach for client-only rendering unless a feature genuinely requires it.
 
