@@ -4,51 +4,7 @@
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.svg" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="theme-color" content="#f6f5f2" />
-		<link
-			rel="preload"
-			href="%sveltekit.assets%/fonts/EBGaramond-700.woff2"
-			as="font"
-			type="font/woff2"
-			crossorigin
-		/>
-		<link
-			rel="preload"
-			href="%sveltekit.assets%/fonts/OpenSauceSans-Regular.woff2"
-			as="font"
-			type="font/woff2"
-			crossorigin
-		/>
-		<link
-			rel="preload"
-			href="%sveltekit.assets%/fonts/OpenSauceSans-SemiBold.woff2"
-			as="font"
-			type="font/woff2"
-			crossorigin
-		/>
-		<link
-			rel="preload"
-			href="%sveltekit.assets%/fonts/IosevkaTermSS08-Regular.woff2"
-			as="font"
-			type="font/woff2"
-			crossorigin
-		/>
-		<script>
-			// Stamp the theme before first paint so there's no flash of the wrong
-			// palette. Light is the default and dark is opt-in via the nav
-			// toggle; the prefers-color-scheme rule in app.css only covers the
-			// no-JS case, where nothing stamps data-theme at all. Kept in sync
-			// with $lib/theme.svelte.ts, which takes over once the app hydrates.
-			try {
-				var theme = localStorage.getItem('theme') || 'light';
-				document.documentElement.dataset.theme = theme;
-				document
-					.querySelector('meta[name="theme-color"]')
-					.setAttribute('content', theme === 'dark' ? '#1a1b26' : '#f6f5f2');
-			} catch (e) {
-				document.documentElement.dataset.theme = 'light';
-			}
-		</script>
+		<meta name="color-scheme" content="light dark" />
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">

@@ -1,17 +1,16 @@
 import { getPosts } from '$lib/server/blog-api';
+import { projects } from '$lib/projects';
+import { renderMarkdown } from '$lib/markdown';
 import type { PageServerLoad } from './$types';
 import type { PostSummary } from '$lib/types/post';
 
-const RECENT_COUNT = 3;
+const RECENT_COUNT = 5;
 
-// Same caching rationale as the blog list route (see blog/+page.server.ts) —
-// the backend can blip or cold-start on its free tier. Unlike /blog, this is
-// the homepage, so an outage must not 500 the whole site: it's reported
-// through `unavailable` instead. Folding it into the empty state made the
-// section claim nothing had been published, which isn't the same thing.
-// s-maxage keeps the edge serving without hitting Railway/Postgres for
-// 10 minutes; stale-while-revalidate covers up to a day behind the scenes,
-// so new posts can take ~10 minutes to appear.
+// Same caching rationale as the blog list route (see blog/+page.server.ts):
+// the Go API runs on a free-tier host that can blip or cold-start, so the edge
+// keeps the last-known-good page for 10 minutes and may serve stale for a day
+// while revalidating. An outage must not 500 the homepage — it is reported
+// through `unavailable` instead of looking like an empty blog.
 export const load: PageServerLoad = async ({ setHeaders }) => {
 	setHeaders({ 'cache-control': 'public, max-age=0, s-maxage=600, stale-while-revalidate=86400' });
 
@@ -26,5 +25,9 @@ export const load: PageServerLoad = async ({ setHeaders }) => {
 		unavailable = true;
 	}
 
-	return { recentPosts, unavailable };
+	return {
+		recentPosts,
+		unavailable,
+		projects: projects.map((project) => ({ ...project, briefHtml: renderMarkdown(project.brief) }))
+	};
 };
