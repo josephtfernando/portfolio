@@ -15,47 +15,82 @@
 	/>
 </svelte:head>
 
-<p class="back"><a href={resolve('/blog')}>← All posts</a></p>
+<div class="blog-page">
+	<nav class="page-nav" aria-label="Site navigation">
+		<a href={resolve('/')}>home</a>
+		<span aria-hidden="true">/</span>
+		<a href={resolve('/blog')}>field notes</a>
+	</nav>
 
-<article>
-	<h1>{data.post.title}</h1>
-	<time datetime={data.post.created_at}>{formatDate(data.post.created_at)}</time>
+	<article>
+		<header class="post-header">
+			<p class="post-kicker">field note</p>
+			<h1>{data.post.title}</h1>
+			<time datetime={data.post.date}>{formatDate(data.post.date)}</time>
+		</header>
 
-	<div class="content">
-		<!-- eslint-disable-next-line svelte/no-at-html-tags -- sanitized server-side in renderMarkdown() -->
-		{@html data.html}
-	</div>
-</article>
+		<div class="content">
+			<!-- eslint-disable-next-line svelte/no-at-html-tags -- sanitized server-side in renderMarkdown() -->
+			{@html data.html}
+		</div>
+	</article>
+</div>
 
 <style>
-	.back {
-		margin-bottom: 2rem;
-		font-size: 0.95rem;
+	.page-nav {
+		display: flex;
+		gap: 0.5rem;
+		margin-bottom: 2.5rem;
+		font-size: 1em;
+		line-height: 1.5;
 	}
 
-	h1 {
-		margin-bottom: 0.25rem;
+	.blog-page {
+		font-family: 'Open Sauce Sans', Arial, Helvetica, sans-serif;
+		font-size: 24px;
+		line-height: 1.5;
 	}
 
-	time {
-		display: block;
-		margin-bottom: 2rem;
+	.post-header {
+		max-width: 65ch;
 		padding-bottom: 1rem;
-		border-bottom: 1px solid var(--line);
+		border-bottom: 1px solid var(--foreground);
+	}
+
+	.post-kicker {
+		margin: 0 0 0.5rem;
+		font-size: 0.9rem;
+		color: #444;
+	}
+
+	.post-header h1 {
+		margin: 0 0 0.25rem;
+		font-size: 1.5em;
+	}
+
+	.post-header time {
+		display: block;
+		font-size: 0.9em;
+		color: #444;
 	}
 
 	.content {
 		max-width: 65ch;
+		margin-top: 2rem;
+		font-family: 'Open Sauce Sans', Arial, Helvetica, sans-serif;
+		line-height: 1.6;
 	}
 
 	.content :global(h2) {
 		margin: 2rem 0 0.75rem;
-		font-size: 1.25rem;
+		font-family: 'Open Sauce Sans', Arial, Helvetica, sans-serif;
+		font-size: 1.25em;
 	}
 
 	.content :global(h3) {
 		margin: 1.75rem 0 0.5rem;
-		font-size: 1.05rem;
+		font-family: 'Open Sauce Sans', Arial, Helvetica, sans-serif;
+		font-size: 1.05em;
 	}
 
 	.content :global(p) {
@@ -76,20 +111,20 @@
 	.content :global(pre) {
 		overflow-x: auto;
 		padding: 0.85rem 1rem;
-		border: 1px solid var(--line);
-		font-size: 0.9rem;
+		border: 1px solid var(--foreground);
+		font-size: 0.9em;
 	}
 
 	.content :global(code) {
-		font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+		font-family: inherit;
 		font-size: 0.92em;
 	}
 
 	.content :global(blockquote) {
 		margin: 0 0 1rem;
 		padding-left: 1rem;
-		border-left: 2px solid var(--line);
-		color: var(--muted);
+		border-left: 2px solid var(--foreground);
+		color: #444;
 	}
 
 	.content :global(img) {
@@ -105,7 +140,7 @@
 	.content :global(th),
 	.content :global(td) {
 		padding: 0.4rem 0.6rem;
-		border: 1px solid var(--line);
+		border: 1px solid var(--foreground);
 		text-align: left;
 	}
 </style>

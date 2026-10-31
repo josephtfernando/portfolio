@@ -12,7 +12,6 @@ Personal portfolio site with a blog, built with SvelteKit. Deployed to Vercel (G
 ## Layout
 
 - `frontend/` — the SvelteKit site (this is the primary app; see conventions below).
-- `backend/` — a Go/Postgres API that serves blog posts (`backend/handlers.go`, `backend/posts.go`), deployed separately (see `backend/railway.toml`, `backend/Dockerfile`). The frontend talks to it server-side only, via `frontend/src/lib/server/blog-api.ts` (`BLOG_API_BASE_URL`) — never from the browser.
 - `docs/` — misc reference docs (e.g. `docs/resume.md`), not app code.
 
 ## SvelteKit conventions
@@ -26,10 +25,9 @@ Personal portfolio site with a blog, built with SvelteKit. Deployed to Vercel (G
 
 ## Blog
 
-- Posts are stored in Postgres and served by the `backend/` Go API, not as local Markdown files.
-- `frontend/src/lib/server/blog-api.ts` wraps the API (fetch + retry on transient failures) and is the only place that should call it; routes/load functions go through it rather than hitting `BLOG_API_BASE_URL` directly.
-- `frontend/src/routes/blog/` renders posts for visitors. Publishing happens through the backend API directly; there is no in-app admin UI.
-- `frontend/src/lib/types/post.ts` has the shared `Post`/`PostInput`/`PostSummary` types.
+- Posts are stored as local Markdown files in `frontend/src/content/posts/` and loaded by `frontend/src/lib/server/blog.ts`.
+- `frontend/src/routes/blog/` renders posts for visitors. Publishing is done by adding or editing a Markdown file; there is no in-app admin UI.
+- `frontend/src/lib/types/post.ts` has the shared `Post`/`PostSummary` types.
 - Post content is markdown, rendered server-side by `frontend/src/lib/markdown.ts` (marked + xss sanitising) and injected with `{@html}`.
 - Project briefs on the homepage live in `frontend/src/lib/projects.ts`; `brief` is markdown.
 
