@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import TextSizeControl from '$lib/components/TextSizeControl.svelte';
 	import { formatDate } from '$lib/format';
 	import { site } from '$lib/site';
 	import type { PageProps } from './$types';
@@ -8,10 +9,10 @@
 </script>
 
 <svelte:head>
-	<title>{data.post.title} — {site.name}</title>
+	<title>{data.post.title} · {site.name}</title>
 	<meta
 		name="description"
-		content={data.post.excerpt || `${data.post.title} — writing by ${site.name}.`}
+		content={data.post.excerpt || `${data.post.title} · writing by ${site.name}.`}
 	/>
 </svelte:head>
 
@@ -20,6 +21,7 @@
 		<a href={resolve('/')}>home</a>
 		<span aria-hidden="true">/</span>
 		<a href={resolve('/blog')}>field notes</a>
+		<TextSizeControl />
 	</nav>
 
 	<article>
@@ -39,6 +41,7 @@
 <style>
 	.page-nav {
 		display: flex;
+		align-items: center;
 		gap: 0.5rem;
 		margin-bottom: 2.5rem;
 		font-size: 1em;
@@ -47,25 +50,24 @@
 
 	.blog-page {
 		font-family: 'Open Sauce Sans', Arial, Helvetica, sans-serif;
-		font-size: 24px;
+		font-size: calc(17.5px * var(--reader-scale, 1));
 		line-height: 1.5;
 	}
 
 	.post-header {
-		max-width: 65ch;
 		padding-bottom: 1rem;
 		border-bottom: 1px solid var(--foreground);
 	}
 
 	.post-kicker {
 		margin: 0 0 0.5rem;
-		font-size: 0.9rem;
+		font-size: 0.9em;
 		color: #444;
 	}
 
 	.post-header h1 {
 		margin: 0 0 0.25rem;
-		font-size: 1.5em;
+		font-size: 1.43em;
 	}
 
 	.post-header time {
@@ -75,22 +77,21 @@
 	}
 
 	.content {
-		max-width: 65ch;
 		margin-top: 2rem;
 		font-family: 'Open Sauce Sans', Arial, Helvetica, sans-serif;
-		line-height: 1.6;
+		line-height: 1.5;
 	}
 
 	.content :global(h2) {
 		margin: 2rem 0 0.75rem;
 		font-family: 'Open Sauce Sans', Arial, Helvetica, sans-serif;
-		font-size: 1.25em;
+		font-size: 1.14em;
 	}
 
 	.content :global(h3) {
 		margin: 1.75rem 0 0.5rem;
 		font-family: 'Open Sauce Sans', Arial, Helvetica, sans-serif;
-		font-size: 1.05em;
+		font-size: 1em;
 	}
 
 	.content :global(p) {
@@ -142,5 +143,15 @@
 		padding: 0.4rem 0.6rem;
 		border: 1px solid var(--foreground);
 		text-align: left;
+	}
+
+	@media (max-width: 900px) {
+		.blog-page {
+			font-size: calc(16px * var(--reader-scale, 1));
+		}
+
+		.post-header h1 {
+			font-size: 1.25em;
+		}
 	}
 </style>

@@ -74,6 +74,10 @@ a:focus-visible {
 	padding: 50px 0 80px;
 }
 
+.wrap.wide {
+	width: min(760px, calc(100% - 40px));
+}
+
 .profile-header {
 	display: flex;
 	min-height: 168px;
@@ -265,7 +269,8 @@ dd {
 }
 
 @media (max-width: 900px) {
-	.wrap {
+	.wrap,
+	.wrap.wide {
 		width: auto;
 		margin: 0;
 		padding: 28px 20px 120px;
