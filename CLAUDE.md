@@ -11,15 +11,15 @@ Personal portfolio site with a blog, built with SvelteKit. Deployed to Vercel (G
 
 ## Layout
 
-- `frontend/` — the SvelteKit site (this is the primary app; see conventions below).
-- `docs/` — misc reference docs (e.g. `docs/resume.md`), not app code.
+- `frontend/`: the SvelteKit site (this is the primary app; see conventions below).
+- `docs/`: misc reference docs (e.g. `docs/resume.md`), not app code.
 
 ## SvelteKit conventions
 
 - `frontend/svelte.config.js` holds the SvelteKit config (preprocess + adapter); `frontend/vite.config.ts` holds only the Vite plugins (Tailwind, SvelteKit) and the Vitest config. Adapter config belongs in `svelte.config.js`, not `vite.config.ts`.
 - Prefer `+page.server.ts` load functions for data that doesn't need client-side reactivity (e.g., blog post lists) over client-side `fetch`.
 - Use `$lib` for shared code, not relative `../../` imports.
-- Use `resolve()` from `$app/paths` for internal `href`s (e.g., `resolve('/blog/[slug]', { slug })`), not raw template strings — it keeps links type-checked against real routes. Nothing lints this automatically (eslint-plugin-svelte 2.x has no such rule), so it is on you to follow.
+- Use `resolve()` from `$app/paths` for internal `href`s (e.g., `resolve('/blog/[slug]', { slug })`), not raw template strings. It keeps links type-checked against real routes. Nothing lints this automatically (eslint-plugin-svelte 2.x has no such rule), so it is on you to follow.
 - Keep components small and colocate route-specific logic in `+page.server.ts`/`+page.ts` rather than pushing everything into `+page.svelte`.
 - Favor SvelteKit's SSR-by-default behavior; don't reach for client-only rendering unless a feature genuinely requires it.
 
@@ -32,13 +32,13 @@ Personal portfolio site with a blog, built with SvelteKit. Deployed to Vercel (G
 ## General dev practices
 
 - Before considering frontend work done, run from `frontend/`: `pnpm run check` (types), `pnpm run lint` (Prettier + ESLint), and `pnpm run test` if logic changed.
-- No premature abstractions — this is a personal portfolio, not a platform. Don't build for hypothetical future requirements (multi-author blog, CMS integration, i18n) unless asked.
+- No premature abstractions. This is a personal portfolio, not a platform. Don't build for hypothetical future requirements (multi-author blog, CMS integration, i18n) unless asked.
 - Commit messages: short, imperative, explain why not just what.
 
 ## For LLM sessions working in this repo (token efficiency)
 
-- Never read `frontend/node_modules/`, `frontend/.svelte-kit/`, or `frontend/build/` — they're generated/vendored. Use `pnpm run check`/`lint` output instead of grepping through them.
+- Never read `frontend/node_modules/`, `frontend/.svelte-kit/`, or `frontend/build/`. They're generated/vendored. Use `pnpm run check`/`lint` output instead of grepping through them.
 - Prefer targeted greps or reading a specific known file over listing/reading whole directories.
 - Use the `run` skill to start the dev server rather than re-deriving `cd frontend && pnpm run dev` each session.
-- Keep diffs scoped to what's asked — this is a small personal project, not a codebase that benefits from speculative refactors.
+- Keep diffs scoped to what's asked. This is a small personal project, not a codebase that benefits from speculative refactors.
 - When verifying a change works, prefer `pnpm run check`/`build` (fast, deterministic) over spinning up the dev server and screenshotting, unless the change is visual/interactive.
