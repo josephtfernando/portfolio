@@ -4,8 +4,9 @@
  */
 export const site = {
 	name: 'Joseph Fernando',
-	email: 'josephfernando05@proton.me',
-	github: 'https://github.com/ApxllxCartxr',
+	url: 'https://joseph05.is-a.dev',
+	email: 'josephfernando2k5@gmail.com',
+	github: 'https://github.com/josephtfernando',
 	description:
 		'Software developer working on backends, simulation and real-time systems. Projects and writing.'
 };

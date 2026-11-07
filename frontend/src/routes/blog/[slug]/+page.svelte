@@ -14,15 +14,24 @@
 		name="description"
 		content={data.post.excerpt || `${data.post.title} · writing by ${site.name}.`}
 	/>
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="{data.post.title} · {site.name}" />
+	<meta
+		property="og:description"
+		content={data.post.excerpt || `${data.post.title} · writing by ${site.name}.`}
+	/>
+	<meta property="article:published_time" content={data.post.date} />
 </svelte:head>
 
-<div class="blog-page">
-	<nav class="page-nav" aria-label="Site navigation">
-		<a href={resolve('/')}>home</a>
-		<span aria-hidden="true">/</span>
-		<a href={resolve('/blog')}>field notes</a>
+<main id="main" tabindex="-1" class="blog-page">
+	<div class="page-bar">
+		<nav class="page-nav" aria-label="Site navigation">
+			<a href={resolve('/')}>home</a>
+			<span aria-hidden="true">/</span>
+			<a href={resolve('/blog')}>field notes</a>
+		</nav>
 		<TextSizeControl />
-	</nav>
+	</div>
 
 	<article>
 		<header class="post-header">
@@ -36,21 +45,28 @@
 			{@html data.html}
 		</div>
 	</article>
-</div>
+</main>
 
 <style>
+	.blog-page {
+		margin-top: 0;
+		font-family: 'Open Sauce Sans', Arial, Helvetica, sans-serif;
+		font-size: calc(1.09375rem * var(--reader-scale, 1));
+		line-height: 1.5;
+	}
+
+	.page-bar {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 2.5rem;
+	}
+
 	.page-nav {
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
-		margin-bottom: 2.5rem;
 		font-size: 1em;
-		line-height: 1.5;
-	}
-
-	.blog-page {
-		font-family: 'Open Sauce Sans', Arial, Helvetica, sans-serif;
-		font-size: calc(17.5px * var(--reader-scale, 1));
 		line-height: 1.5;
 	}
 
@@ -147,7 +163,7 @@
 
 	@media (max-width: 900px) {
 		.blog-page {
-			font-size: calc(16px * var(--reader-scale, 1));
+			font-size: calc(1rem * var(--reader-scale, 1));
 		}
 
 		.post-header h1 {

@@ -1,12 +1,16 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
+	// Keep in sync with the pre-paint script in app.html.
 	const STORAGE_KEY = 'blog-text-scale';
 	const MIN = 100;
 	const MAX = 150;
 	const STEP = 12.5;
 
 	let scale = $state(100);
+	// The control is client-only: without JavaScript the buttons would be
+	// rendered but do nothing, so don't ship dead controls in the HTML.
+	let ready = $state(false);
 
 	function apply(value: number) {
 		scale = value;
@@ -14,6 +18,15 @@
 	}
 
 	onMount(() => {
+		// app.html already applied the saved scale before the first paint, so
+		// adopt that value instead of briefly resetting the page to 100%.
+		const applied = Number(document.documentElement.style.getPropertyValue('--reader-scale')) * 100;
+		if (Number.isFinite(applied) && applied >= MIN && applied <= MAX) {
+			scale = applied;
+			ready = true;
+			return;
+		}
+
 		let stored = MIN;
 		try {
 			stored = Number(localStorage.getItem(STORAGE_KEY));
@@ -21,6 +34,7 @@
 			// Storage can be unavailable; keep the default size.
 		}
 		apply(Number.isFinite(stored) && stored >= MIN && stored <= MAX ? stored : MIN);
+		ready = true;
 	});
 
 	function change(delta: number) {
@@ -35,18 +49,21 @@
 </script>
 
 <div class="text-size" role="group" aria-label="Text size">
-	<button
-		type="button"
-		aria-label="Decrease text size"
-		disabled={scale <= MIN}
-		onclick={() => change(-STEP)}>A−</button
-	>
-	<button
-		type="button"
-		aria-label="Increase text size"
-		disabled={scale >= MAX}
-		onclick={() => change(STEP)}>A+</button
-	>
+	{#if ready}
+		<button
+			type="button"
+			aria-label="Decrease text size"
+			disabled={scale <= MIN}
+			onclick={() => change(-STEP)}>A−</button
+		>
+		<button
+			type="button"
+			aria-label="Increase text size"
+			disabled={scale >= MAX}
+			onclick={() => change(STEP)}>A+</button
+		>
+		<span class="visually-hidden" aria-live="polite">Text size {scale}%</span>
+	{/if}
 </div>
 
 <style>
@@ -59,8 +76,13 @@
 
 	button {
 		appearance: none;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 24px;
+		min-height: 24px;
 		margin: 0;
-		padding: 0.1rem 0.25rem;
+		padding: 0 0.25rem;
 		border: 0;
 		background: none;
 		color: #444;
@@ -83,5 +105,14 @@
 	button:disabled {
 		cursor: default;
 		opacity: 0.35;
+	}
+
+	.visually-hidden {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
 	}
 </style>

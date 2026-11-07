@@ -1,24 +1,43 @@
+<script lang="ts">
+	import { resolve } from '$app/paths';
+	import { site } from '$lib/site';
+</script>
+
 <svelte:head>
 	<title>Joseph A. T. Fernando</title>
 	<meta
 		name="description"
 		content="Joseph A. T. Fernando - backend and infrastructure software, concurrency, and ML inference."
 	/>
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="Joseph A. T. Fernando" />
+	<meta
+		property="og:description"
+		content="Joseph A. T. Fernando - backend and infrastructure software, concurrency, and ML inference."
+	/>
 </svelte:head>
 
 <header class="profile-header">
-	<img class="profile-image" src="/Mask.png" alt="Joseph A. T. Fernando" />
+	<img
+		class="profile-image"
+		src="/mask.webp"
+		width="168"
+		height="168"
+		alt=""
+		decoding="async"
+		fetchpriority="high"
+	/>
 
 	<div class="identity">
 		<h1>Joseph A. T. Fernando</h1>
 		<p class="identity-line">backend systems and infrastructure engineer.</p>
-		<nav class="contact-links" aria-label="Contact links">
+		<nav class="contact-links" aria-label="Links">
 			<div class="link-row">
-				<a href="https://github.com/josephtfernando">github</a>
-				<a href="mailto:josephfernando2k5@gmail.com">josephfernando2k5@gmail.com</a>
+				<a href={site.github}>github</a>
+				<a href={`mailto:${site.email}`}>{site.email}</a>
 			</div>
 			<div class="link-row">
-				<a href="/blog">blog</a>
+				<a href={resolve('/blog')}>blog</a>
 				<a href="https://leetcode.com/u/josephtfernando">leetcode</a>
 				<a href="https://www.linkedin.com/in/joseph-fernando05">linkedin</a>
 			</div>
@@ -26,7 +45,7 @@
 	</div>
 </header>
 
-<main>
+<main id="main" tabindex="-1">
 	<section class="bio" aria-labelledby="bio-heading">
 		<h2 id="bio-heading">About.</h2>
 		<p>

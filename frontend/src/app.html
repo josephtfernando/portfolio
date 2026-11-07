@@ -4,7 +4,28 @@
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.svg" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="color-scheme" content="light dark" />
+		<meta name="color-scheme" content="light" />
+		<meta name="theme-color" content="#e8e7e2" />
+		<link
+			rel="preload"
+			href="%sveltekit.assets%/fonts/OpenSauceSans-Regular.woff2"
+			as="font"
+			type="font/woff2"
+			crossorigin="anonymous"
+		/>
+		<script>
+			// Apply the saved reader scale before the first paint so text never
+			// jumps size once the component mounts. Keep the key in sync with
+			// TextSizeControl.svelte.
+			try {
+				const stored = Number(localStorage.getItem('blog-text-scale'));
+				if (stored >= 100 && stored <= 150) {
+					document.documentElement.style.setProperty('--reader-scale', String(stored / 100));
+				}
+			} catch {
+				// Storage can be unavailable; keep the default size.
+			}
+		</script>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">

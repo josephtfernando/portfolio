@@ -11,15 +11,20 @@
 <svelte:head>
 	<title>Field notes · {site.name}</title>
 	<meta name="description" content="Notes by {site.name}." />
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="Field notes · {site.name}" />
+	<meta property="og:description" content="Notes by {site.name}." />
 </svelte:head>
 
-<div class="blog-page">
-	<nav class="page-nav" aria-label="Site navigation">
-		<a href={resolve('/')}>home</a>
-		<span aria-hidden="true">/</span>
-		<a href={resolve('/blog')} aria-current="page">field notes</a>
+<main id="main" tabindex="-1" class="blog-page">
+	<div class="page-bar">
+		<nav class="page-nav" aria-label="Site navigation">
+			<a href={resolve('/')}>home</a>
+			<span aria-hidden="true">/</span>
+			<a href={resolve('/blog')} aria-current="page">field notes</a>
+		</nav>
 		<TextSizeControl />
-	</nav>
+	</div>
 
 	<header class="page-header">
 		<p class="page-kicker">concurrency, runtime behavior, and distributed systems</p>
@@ -31,14 +36,27 @@
 	{:else}
 		<PostList posts={data.posts} />
 	{/if}
-</div>
+</main>
 
 <style>
+	.blog-page {
+		margin-top: 0;
+		font-family: 'Open Sauce Sans', Arial, Helvetica, sans-serif;
+		font-size: calc(1.09375rem * var(--reader-scale, 1));
+		line-height: 1.5;
+	}
+
+	.page-bar {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 2.5rem;
+	}
+
 	.page-nav {
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
-		margin-bottom: 2.5rem;
 		font-size: 1em;
 		line-height: 1.5;
 	}
@@ -53,12 +71,6 @@
 		border-bottom: 1px solid var(--foreground);
 	}
 
-	.blog-page {
-		font-family: 'Open Sauce Sans', Arial, Helvetica, sans-serif;
-		font-size: calc(17.5px * var(--reader-scale, 1));
-		line-height: 1.5;
-	}
-
 	.page-header h1 {
 		font-size: 1.43em;
 	}
@@ -71,7 +83,7 @@
 
 	@media (max-width: 900px) {
 		.blog-page {
-			font-size: calc(16px * var(--reader-scale, 1));
+			font-size: calc(1rem * var(--reader-scale, 1));
 		}
 
 		.page-header h1 {

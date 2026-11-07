@@ -68,6 +68,35 @@ a:focus-visible {
 	outline-offset: 3px;
 }
 
+/*
+ * Links inside running text are blue against paper, so colour alone has to
+ * carry the distinction. Underline them; nav and other standalone links keep
+ * the quieter unmarked treatment.
+ */
+main p a,
+main li a,
+main dd a,
+.content a {
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+}
+
+.skip-link {
+	position: absolute;
+	top: 0;
+	left: -9999px;
+}
+
+.skip-link:focus {
+	position: fixed;
+	z-index: 10;
+	top: 8px;
+	left: 8px;
+	padding: 8px 12px;
+	background: var(--foreground);
+	color: var(--background);
+}
+
 .wrap {
 	width: min(695px, calc(100% - 40px));
 	margin-inline: auto;
@@ -107,18 +136,18 @@ p {
 }
 
 h1 {
-	font-size: 25px;
+	font-size: 1.5625rem;
 	font-weight: 400;
 	line-height: 1.2;
 }
 
 .identity-line {
-	font-size: 20px;
+	font-size: 1.25rem;
 	line-height: 1.2;
 }
 
 .current-line {
-	font-size: 17.5px;
+	font-size: 1.09375rem;
 }
 
 .bio .current-line {
@@ -126,7 +155,7 @@ h1 {
 }
 
 h2 {
-	font-size: 20px;
+	font-size: 1.25rem;
 	font-weight: 700;
 	line-height: 1.2;
 }
@@ -135,7 +164,7 @@ h2 {
 	display: flex;
 	flex-direction: column;
 	gap: var(--space);
-	font-size: 20px;
+	font-size: 1.25rem;
 	line-height: 1.2;
 }
 
@@ -147,7 +176,7 @@ h2 {
 
 main {
 	margin-top: calc(var(--space) * 2);
-	font-size: 17.5px;
+	font-size: 1.09375rem;
 }
 
 section p {
@@ -201,7 +230,7 @@ h3,
 .entry-context,
 dt,
 dd {
-	font-size: 17.5px;
+	font-size: 1.09375rem;
 	line-height: 1.5;
 }
 
@@ -261,7 +290,7 @@ dd {
 	bottom: clamp(24px, 4vw, 35px);
 	color: var(--link);
 	font-family: 'Belmonte Ballpoint', cursive;
-	font-size: 62px;
+	font-size: 3.875rem;
 	font-weight: 400;
 	line-height: 1;
 	transform: rotate(-7deg);
@@ -292,23 +321,23 @@ dd {
 	}
 
 	h1 {
-		font-size: 20px;
+		font-size: 1.25rem;
 	}
 
 	.identity-line {
-		font-size: 16px;
+		font-size: 1rem;
 	}
 
 	.current-line {
-		font-size: 16px;
+		font-size: 1rem;
 	}
 
 	h2 {
-		font-size: 18px;
+		font-size: 1.125rem;
 	}
 
 	.contact-links {
-		font-size: 16px;
+		font-size: 1rem;
 	}
 
 	.link-row {
@@ -317,7 +346,7 @@ dd {
 
 	main {
 		margin-top: 0;
-		font-size: 16px;
+		font-size: 1rem;
 	}
 
 	.experience {
@@ -338,7 +367,7 @@ dd {
 	.entry-context,
 	dt,
 	dd {
-		font-size: 16px;
+		font-size: 1rem;
 	}
 
 	.entry-heading span {
@@ -351,6 +380,6 @@ dd {
 	.signature {
 		right: 20px;
 		bottom: 20px;
-		font-size: 50px;
+		font-size: 3.125rem;
 	}
 }
