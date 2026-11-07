@@ -3,7 +3,7 @@
  *
  * `brief` is markdown (links, *emphasis*, `code`), rendered on the server.
  * `stack` and `year` make the small meta line above it. The copy below is the
- * old site's wording, kept so the section isn't empty — rewrite it.
+ * old site's wording, kept so the section isn't empty. Rewrite it.
  */
 export interface Project {
 	name: string;
@@ -20,7 +20,7 @@ export const projects: Project[] = [
 		stack: 'Go · discrete-event simulation',
 		year: '2026',
 		brief:
-			'A Chennai Metropolitan Railway simulator. The full CMRL Phase I network — 41 stations across 54.1 km — modelled as a weighted directed graph, with train movement, fare collection and ridership economics run as discrete events behind a REST API.',
+			'A Chennai Metropolitan Railway simulator. The full CMRL Phase I network (41 stations across 54.1 km) is modelled as a weighted directed graph, with train movement, fare collection and ridership economics run as discrete events behind a REST API.',
 		href: 'https://github.com/ApxllxCartxr/cmrlsim'
 	},
 	{
